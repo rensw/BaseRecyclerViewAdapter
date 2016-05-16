@@ -28,7 +28,7 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
 
 
     /**
-     * Adds a header view.
+     * 添加头部VIEW
      */
     public void addHeader(@NonNull View view) {
         if (view == null) {
@@ -38,7 +38,7 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
     }
 
     /**
-     * Adds a footer view.
+     * 添加底部VIEW
      */
     public void addFooter(@NonNull View view) {
         if (view == null) {
@@ -48,7 +48,7 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
     }
 
     /**
-     * Toggles the visibility of the header views.
+     * 设置头部是否可见
      */
     public void setHeaderVisibility(boolean shouldShow) {
         for (View header : mHeaders) {
@@ -57,7 +57,7 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
     }
 
     /**
-     * Toggles the visibility of the footer views.
+     * 设置底部是否可见
      */
     public void setFooterVisibility(boolean shouldShow) {
         for (View footer : mFooters) {
@@ -66,28 +66,28 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
     }
 
     /**
-     * @return the number of headers.
+     * @return 返回头部的size
      */
     public int getHeaderCount() {
         return mHeaders.size();
     }
 
     /**
-     * @return the number of footers.
+     * @return 返回底部的size
      */
     public int getFooterCount() {
         return mFooters.size();
     }
 
     /**
-     * Gets the indicated header, or null if it doesn't exist.
+     * 获取 headview
      */
     public View getHeader(int i) {
         return i < mHeaders.size() ? mHeaders.get(i) : null;
     }
 
     /**
-     * Gets the indicated footer, or null if it doesn't exist.
+     * 获取 Footview
      */
     public View getFooter(int i) {
         return i < mFooters.size() ? mFooters.get(i) : null;
@@ -153,6 +153,12 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
         }
     }
 
+    /**
+     * item 点击事件和长按时间
+     * @param parent
+     * @param viewHolder
+     * @param viewType
+     */
     protected void setListener(final ViewGroup parent, final ViewHolder viewHolder, int viewType)
     {
         if (!isEnabled(viewType)) return;
