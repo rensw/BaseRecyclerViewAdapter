@@ -154,7 +154,7 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
     }
 
     /**
-     * item 点击事件和长按时间
+     * item 点击事件和长按事件
      * @param parent
      * @param viewHolder
      * @param viewType
