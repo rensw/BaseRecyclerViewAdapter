@@ -2,6 +2,9 @@ package com.iyinxun.library;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -106,6 +109,39 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
     }
 
     @Override
+    public void onViewAttachedToWindow(ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+        if(lp != null
+                && lp instanceof StaggeredGridLayoutManager.LayoutParams
+                && (holder.getLayoutPosition() < mHeaders.size()||holder.getLayoutPosition()>=getItemCount()-mFooters.size())) {
+            StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
+            p.setFullSpan(true);
+        }
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (manager instanceof GridLayoutManager) {
+            final GridLayoutManager gridManager = ((GridLayoutManager) manager);
+            gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (isHeader(getItemViewType(position))) {
+                        return gridManager.getSpanCount();
+                    } else if (isFooter(getItemViewType(position))) {
+                        return gridManager.getSpanCount();
+                    } else {
+                        return 1;
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         if (isHeader(viewType)) {
             int whichHeader = Math.abs(viewType - HEADER_VIEW_TYPE);
@@ -127,9 +163,9 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         if (position < mHeaders.size()) {
             return;
-        } else if ( mHeaders.size()<=position&& position< getItemCount()-mFooters.size()) {
+        } else if (mHeaders.size() <= position && position < getItemCount() - mFooters.size()) {
             // This is a real position, not a header or footer. Bind it.
-            super.onBindViewHolder(viewHolder, position-mHeaders.size());
+            super.onBindViewHolder(viewHolder, position - mHeaders.size());
         } else {
             return;
         }
@@ -155,26 +191,23 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
 
     /**
      * item 点击事件和长按事件
+     *
      * @param parent
      * @param viewHolder
      * @param viewType
      */
-    protected void setListener(final ViewGroup parent, final ViewHolder viewHolder, int viewType)
-    {
+    protected void setListener(final ViewGroup parent, final ViewHolder viewHolder, int viewType) {
         if (!isEnabled(viewType)) return;
-        viewHolder.getConvertView().setOnClickListener(new View.OnClickListener()
-        {
+        viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if (mOnItemClickListener != null)
-                {
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
                     int position = getPosition(viewHolder);
-                    if(position<mHeaders.size()){
+                    if (position < mHeaders.size()) {
                         return;
                     }
                     try {
-                        mOnItemClickListener.onItemClick(parent, v,  position-mHeaders.size());
+                        mOnItemClickListener.onItemClick(parent, v, position - mHeaders.size());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -188,10 +221,10 @@ public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {
             public boolean onLongClick(View v) {
                 if (mOnItemClickListener != null) {
                     int position = getPosition(viewHolder);
-                    if(position<mHeaders.size()){
+                    if (position < mHeaders.size()) {
                         return false;
                     }
-                    return mOnItemClickListener.onItemLongClick(parent, v, position-mHeaders.size());
+                    return mOnItemClickListener.onItemLongClick(parent, v, position - mHeaders.size());
                 }
                 return false;
             }
