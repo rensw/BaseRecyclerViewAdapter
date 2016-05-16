@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/library/src/main/java/com/iyinxun/library/BaseAdapter.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/library/src/main/java/com/iyinxun/library/OnItemClickListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/library/src/main/java/com/iyinxun/library/ViewHolder.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
