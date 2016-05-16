@@ -2,10 +2,11 @@ package com.iyinxun.RcAdapter;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iyinxun.library.BaseAdapter;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
     private List<String> datalist() {
         List<String> mlist = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             mlist.add("我是" + i + "item");
         }
         return mlist;
@@ -43,8 +44,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         View headview = View.inflate(this, R.layout.head, null);
         View footview = View.inflate(this, R.layout.foot, null);
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
-
+        // recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview.setLayoutManager (new GridLayoutManager(this, 2));
+//        recyclerview.setLayoutManager(new StaggeredGridLayoutManager(3,
+//                StaggeredGridLayoutManager.VERTICAL));
          /*
          * BaseAdapter 没有addHeader和addFooter 方法
          */
@@ -64,7 +67,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
             @Override
             public void convert(ViewHolder holder, String s) {
                 holder.setText(R.id.item_tx, s);
+                TextView txtview = holder.getView(R.id.item_tx);
+                txtview.setHeight(50 + (holder.getLayoutPosition() % 3) * 50);
             }
+
         };
         baseHeadAdapter.addHeader(footview);
         baseHeadAdapter.addHeader(headview);
