@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * rsw
- * 无限Add head foot
+ * Add 多个 head foot
  * 2016/5/13
  */
 public abstract class BaseHeadAdapter<T> extends BaseAdapter<T> {

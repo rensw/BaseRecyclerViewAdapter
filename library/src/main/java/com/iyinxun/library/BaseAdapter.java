@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * Created by zhy on 16/4/9.
+ * rsw
+ * 2016/5/13
  */
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     public Context mContext;
